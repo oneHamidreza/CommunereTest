@@ -4,6 +4,7 @@ import communere.App
 import communere.di.AppApi
 import meow.core.arch.DataSourceInterface
 import meow.core.data.MeowSharedPreferences
+import meow.ktx.isNotNullOrEmpty
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.closestKodein
 import org.kodein.di.erased.instance
@@ -23,10 +24,10 @@ class DataSource(override var app: App) : DataSourceInterface, KodeinAware {
     private val spMain: MeowSharedPreferences by instance<MeowSharedPreferences>("spMain")
     private val spUpdate: MeowSharedPreferences by instance<MeowSharedPreferences>("spUpdate")
 
-    suspend fun getTokenFromApi(request: Authenticate.Api.RequestGetToken) =
+    suspend fun getTokenFromApi(request: Authenticate.Api.RequestLogin) =
         api.createServiceByAdapter<Authenticate.Api>().getToken(request)
 
-    fun isLogin() = fetchApiToken().isNotEmpty()
+    fun isLogin() = fetchUser().username.isNotNullOrEmpty()
     fun fetchUser() = spMain.get("user", User())
     fun saveUser(it: User) = spMain.put("user", it)
 

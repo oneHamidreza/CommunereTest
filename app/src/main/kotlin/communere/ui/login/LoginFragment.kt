@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.navigation.fragment.findNavController
 import communere.R
+import communere.data.ApiEvent
 import communere.data.Authenticate
 import communere.data.DataSource
 import communere.databinding.FragmentLoginBinding
@@ -24,17 +25,20 @@ import org.kodein.di.erased.instance
 
 class LoginFragment : BaseFragment<FragmentLoginBinding>() {
 
-    private val dataSource: DataSource by instance<DataSource>()
-
     private val viewModel: LoginViewModel by instanceViewModel()
     override fun layoutId() = R.layout.fragment_login
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.btAction.setOnClickListener {
-            binding.formView.validate {
-                callApiAndObserve()
-            }
+            val request = Authenticate.Api.RequestLogin(
+                username = binding.etUsername.textString.trim(),
+                password = binding.etPassword.textString
+            )
+            if (request.validate())
+                callApiAndObserve(request)
+            else
+                toastL(R.string.warn_login_unauthorized)
         }
     }
 
@@ -46,36 +50,28 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
         }
     }
 
-    private fun callApiAndObserve() {
-        MeowFlow.PutDataApi<Authenticate.Api.ResponseGetToken>(this) {
-            val request = Authenticate.Api.RequestGetToken(
-                username = binding.etUsername.textString,
-                password = binding.etPassword.textString
-            )
-            viewModel.callApi(request)
-        }.apply {
-            containerViews = arrayOf(binding.formView)
-            progressBarInterface = binding.pb
-            onRequestNotValidFromResponse = {
-                binding.formView.showErrorFromApi(it)
-            }
-            onErrorAction = {
-                logD(m = "api login error ${it.data.code}")
-                when (it.data.code) {
-                    HttpCodes.UNAUTHORIZED.code -> toastL(R.string.warn_login_unauthorized)
-                    else -> toastL(it.data.createErrorModel(resources()).titlePlusMessage)
+    private fun callApiAndObserve(request: Authenticate.Api.RequestLogin) {
+        viewModel.eventLiveData.safeObserve(this) {
+            when (it) {
+                is ApiEvent.Loading -> {
+                    if (it.data)
+                        binding.pb.show()
+                    else
+                        binding.pb.hide()
+                }
+                is ApiEvent.Success -> {
+                    toastL(R.string.warn_login_success)
+                    findNavController().navigate(LoginFragmentDirections.actionFragmentLoginToFragmentHome())
+                }
+                is ApiEvent.Error -> {
+                    val data = it.data as? Authenticate.Api.ResponseLogin
+                    toastL(data?.message ?: getString(R.string.warn_login_failed))
+                }
+                else -> {
                 }
             }
-            onSuccessAction = {
-                logD(m = "api login success ${it.token}")
-                if (it.token.isNotNullOrEmpty()) {
-                    binding.formView.resetForm()
-                    toastL(R.string.warn_login_success)
-                    findNavController().navigate(R.id.fragmentHome)
-                } else
-                    toastL(R.string.warn_login_failed)
-            }
-        }.observeForForm(viewModel.eventLiveData)
+        }
+        viewModel.callApi(request)
     }
 
     override fun onKeyboardStateChanged(isKeyboardUp: Boolean, isFromOnCreate: Boolean) {

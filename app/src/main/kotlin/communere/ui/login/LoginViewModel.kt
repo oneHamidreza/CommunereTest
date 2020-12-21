@@ -1,8 +1,8 @@
 package communere.ui.login
 
 import communere.App
+import communere.data.ApiEvent
 import communere.data.Authenticate
-import meow.core.api.MeowEvent
 import meow.core.arch.MeowViewModel
 import meow.core.arch.SingleLiveData
 
@@ -16,22 +16,18 @@ import meow.core.arch.SingleLiveData
 
 class LoginViewModel(override var app:App, var repository: Authenticate.Repository) : MeowViewModel(app){
 
-    var eventLiveData = SingleLiveData<MeowEvent<*>>()
-    var modelLiveData = SingleLiveData<Authenticate.Api.ResponseGetToken>()
+    var eventLiveData = SingleLiveData<ApiEvent<*>>()
 
-    fun callApi(request: Authenticate.Api.RequestGetToken) {
-        safeCallApi(
-            liveData = eventLiveData,
-            apiAction = { repository.getTokenFromApi(request) }
-        ) { _, it ->
-            val user = it?.decodeJWT()
-            user?.let {
-                app.dataSource.saveUser(it)
-            }
-            app.dataSource.saveApiToken(it?.token ?: "")
-
-            modelLiveData.postValue(it)
-        }//todo handle 401 in Meow Api
+    fun callApi(request: Authenticate.Api.RequestLogin) {
+        eventLiveData.postValue(ApiEvent.Loading(true))
+        val response = repository.loginFromApi(request)
+        if (response.status){
+            val user = response.user
+            app.dataSource.saveUser(user)
+            eventLiveData.postValue(ApiEvent.Success(user))
+        }else{
+            eventLiveData.postValue(ApiEvent.Error(response))
+        }
     }
 
 }

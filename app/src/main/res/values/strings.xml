@@ -2,7 +2,7 @@
     <string name="app_name">CommunerTest</string>
 
     <string name="logout">Log out</string>
-    <string name="logout_alert_title">Sign ou؟</string>
+    <string name="logout_alert_title">Sign out?</string>
     <string name="logout_alert_message">Are you want to sign out?</string>
 
     <string name="yes">Yes</string>

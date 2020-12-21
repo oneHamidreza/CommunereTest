@@ -18,10 +18,15 @@ data class User(
     @Json(name = "username") var username: String? = null,
     @Json(name = "password") var password: String? = null,
     @Json(name = "userId") var userId: String? = null,
-    @Json(name = "avatarUrl") var avatarUrl: String? = null
+    @Json(name = "avatarUrl") var avatarUrl: String? = null,
+    @Json(name = "userType") var userTypeValue: Int = UserTypes.USER.ordinal,
 ){
-    val isValid: Boolean
-    get() = username.isNotNullOrEmpty() &&
-            password.isNotNullOrEmpty() &&
-            userId.isNotNullOrEmpty()
+    val userType: UserTypes
+        get() {
+            return UserTypes.values().find { it.ordinal == userTypeValue } ?: UserTypes.USER
+        }
+}
+
+enum class UserTypes {
+    ADMIN, USER
 }

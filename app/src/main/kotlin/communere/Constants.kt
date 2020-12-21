@@ -1,25 +1,19 @@
 package communere
 
 /**
- * [...] class.
+ * Constants object.
  *
  * @author  Hamidreza Etebarian
  * @version 1.0.0
- * @since   2020-12-08
+ * @since   2020-12-21
  */
 
 object Constants {
 
-    const val GLOBAL_SCHEMA = "/global"
+    const val ADMIN_USERNAME = "admin"
+    const val ADMIN_PASSWORD = "2686267Abc"
 
-    const val REALM_DB_ENDPOINT_PROD = "communereprod.us2a.cloud.realm.io" // <- update this
+    const val DEFAULT_USER_USERNAME = "usertest01"
+    const val DEFAULT_USER_PASSWORD = "2686267Abc"
 
-    const val REALM_DB_ENDPOINT_DEV_1 = "communere1.us2a.cloud.realm.io" // <- update this
-
-    const val REALM_DB_ENDPOINT_DEV_2 = "communere2.us1a.cloud.realm.io" // <- update this
-
-
-    const val HUMAN_TASK_FORM_ENDPOINT_PROD = "https://forms.eeva.io" // <- update this
-
-    const val HUMAN_TASK_FORM_ENDPOINT_DEV = "http://localhost:8090" // <- update this
 }

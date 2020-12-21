@@ -14,6 +14,7 @@ import communere.databinding.ActivityMainBinding
 import communere.ui.home.HomeViewModel
 import communere.widget.navheader.NavHeaderView
 import meow.core.ui.MeowActivity
+import meow.ktx.alert
 import meow.ktx.getColorCompat
 import meow.ktx.instanceViewModel
 import meow.ktx.sdkNeed
@@ -44,7 +45,11 @@ class MainActivity : MeowActivity<ActivityMainBinding>() {
         binding.viewModel = viewModel
         setSupportActionBar(binding.toolbar)
         setupNavigation()
-        viewModel.setup()
+
+        if (!dataSource.isLogin()) {
+            navController.popBackStack()
+            navController.navigate(R.id.fragmentLogin)
+        }
     }
 
     private fun setupNavigation() {
@@ -80,17 +85,15 @@ class MainActivity : MeowActivity<ActivityMainBinding>() {
                 when (item.itemId) {
                     R.id.actionToHome -> navController.navigate(R.id.fragmentHome)
                     R.id.actionToLogout -> {
-//                        alert()
-//                            .setTitle(R.string.logout_alert_title)
-//                            .setMessage(R.string.logout_alert_message)
-//                            .setPositiveButton(R.string.yes){ _,_ ->
-//                                viewModel?.logout()
-//                                recreate()
-//                            }
-//                            .setNegativeButton(R.string.no){_,_ ->
-//
-//                            }
-//                            .show()
+                        alert(R.string.logout_alert_title,R.string.logout_alert_message)
+                            .setPositiveButton(R.string.yes){ _,_ ->
+                                viewModel?.logout()
+                                recreate()
+                            }
+                            .setNegativeButton(R.string.no){_,_ ->
+
+                            }
+                            .show()
                     }
                 }
                 navigationView.isEnabled = false

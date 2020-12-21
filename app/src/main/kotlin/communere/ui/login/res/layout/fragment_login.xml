@@ -50,14 +50,13 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <meow.widget.MeowFormView
-                        android:id="@+id/formView"
-                        meow_gap="@{16}"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
                         android:orientation="vertical"
-                        android:padding="24dp">
+                        android:padding="24dp"
+                        meow_gap="@{16}">
 
                         <meow.widget.MeowTextField
                             android:id="@+id/etUsername"
@@ -86,7 +85,7 @@
                             android:minHeight="64dp"
                             android:text="@string/login_action" />
 
-                    </meow.widget.MeowFormView>
+                    </LinearLayout>
 
                 </LinearLayout>
 

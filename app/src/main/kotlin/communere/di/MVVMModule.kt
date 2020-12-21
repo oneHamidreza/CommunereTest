@@ -35,6 +35,6 @@ val mvvmModule = Module("MVVM Module", false) {
         MainViewModel(kodein.direct.instance())
     }
 
-    bind() from provider { Authenticate.Repository(instance()) }
+    bind() from provider { Authenticate.Repository() }
 
 }
