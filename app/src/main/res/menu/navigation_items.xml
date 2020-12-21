@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:id="@+id/group_home">
+        <item
+            android:id="@+id/actionToHome"
+            android:icon="@drawable/ic_home"
+            android:title="@string/fragment_home" />
+    </group>
+
+    <group android:id="@+id/group_account">
+        <item
+            android:id="@+id/actionToLogout"
+            android:icon="@drawable/ic_logout"
+            android:title="@string/logout" />
+    </group>
+
+</menu>

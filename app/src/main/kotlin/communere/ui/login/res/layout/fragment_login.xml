@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="communere.ui.login.LoginViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/llLogo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="48dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                style="@style/Meow.TextView"
+                android:layout_gravity="center"
+                android:text="@string/login_title"
+                android:textAppearance="?textAppearanceSubtitle1"
+                android:textColor="@color/on_background_high" />
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <meow.widget.MeowFormView
+                        android:id="@+id/formView"
+                        meow_gap="@{16}"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="24dp">
+
+                        <meow.widget.MeowTextField
+                            android:id="@+id/etUsername"
+                            style="@style/App.TextField.Login"
+                            android:textDirection="ltr"
+                            android:hint="@string/login_username"
+                            app:errorEnabled="true"
+                            app:meow_inputType="text"
+                            app:meow_validateType="empty"
+                            app:startIconDrawable="@drawable/ic_person" />
+
+                        <meow.widget.MeowTextField
+                            android:id="@+id/etPassword"
+                            style="@style/App.TextField.Login"
+                            android:hint="@string/login_password"
+                            app:errorEnabled="true"
+                            app:meow_inputType="textPassword"
+                            app:meow_validateType="empty"
+                            app:startIconDrawable="@drawable/ic_pass" />
+
+                        <Button
+                            android:id="@+id/btAction"
+                            style="@style/Meow.Button"
+                            android:layout_marginTop="16dp"
+                            android:layout_width="match_parent"
+                            android:minHeight="64dp"
+                            android:text="@string/login_action" />
+
+                    </meow.widget.MeowFormView>
+
+                </LinearLayout>
+
+            </ScrollView>
+
+            <meow.widget.MeowProgressBar
+                android:id="@+id/pb"
+                style="@style/Meow.ProgressBar" />
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+</layout>

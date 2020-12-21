@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="communere.ui.main.MainViewModel" />
+
+        <variable
+            name="model"
+            type="communere.data.Main" />
+    </data>
+
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/drawerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/appBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:liftOnScroll="true">
+
+                <com.google.android.material.appbar.MaterialToolbar
+                    android:id="@+id/toolbar"
+                    style="@style/Meow.Toolbar.Surface"
+                    app:title="@string/app_name"/>
+
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <fragment
+                android:id="@+id/navHost"
+                android:name="androidx.navigation.fragment.NavHostFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:defaultNavHost="true"
+                app:navGraph="@navigation/nav_graph" />
+
+        </LinearLayout>
+
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/navigationView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:theme="@style/App.Theme.Navigation"
+            app:itemShapeAppearance="@style/App.ShapeAppearance.Navigation"
+            app:itemShapeAppearanceOverlay="@style/App.ShapeAppearance.Navigation"
+            app:menu="@menu/navigation_items" />
+
+    </androidx.drawerlayout.widget.DrawerLayout>
+
+</layout>

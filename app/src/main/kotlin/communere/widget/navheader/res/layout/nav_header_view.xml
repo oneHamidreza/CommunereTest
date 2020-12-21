@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="avatarUrl"
+            type="String" />
+
+        <variable
+            name="alias"
+            type="String" />
+
+        <variable
+            name="caption"
+            type="String" />
+    </data>
+
+    <merge>
+
+        <meow.widget.MeowCircleImageView
+            meow_data="@{avatarUrl}"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            app:meow_hasStroke="true"
+            app:meow_strokeColor="@color/stroke_color"
+            app:meow_strokeWidth="1dp" />
+
+        <TextView
+            style="@style/Meow.TextView"
+            android:layout_marginTop="16dp"
+            android:text="@{alias}"
+            android:textAppearance="?textAppearanceSubtitle1"
+            app:fontFamily="@font/roboto_bold"
+            android:textColor="@color/on_surface_high" />
+
+        <TextView
+            style="@style/Meow.TextView"
+            android:layout_marginTop="8dp"
+            android:text="@{caption}"
+            android:textAppearance="?textAppearanceBody2"
+            android:textColor="@color/on_surface_high" />
+
+    </merge>
+
+</layout>

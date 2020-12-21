@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="fragment_home">Home</string>
+    <string name="loading_sync">Syncing account…</string>
+    <string name="userId">User ID : %s</string>
+</resources>

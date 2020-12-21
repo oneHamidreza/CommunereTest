@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary">#1785fb</color>
+    <color name="primary_light">#1785fb</color>
+    <color name="primary_dark">#bf3200</color>
+    <color name="primary_variant">@color/primary_dark</color>
+    <color name="on_primary">#ffffff</color>
+    <color name="secondary">#2c2c2c</color>
+    <color name="secondary_light">#000000</color>
+    <color name="secondary_dark">#000000</color>
+    <color name="secondary_variant">@color/secondary_dark</color>
+    <color name="on_secondary">#ffffff</color>
+    <color name="status_bar">@color/meow_surface</color>
+
+    <color name="navigation_view_item_checked">?colorPrimary</color>
+    <color name="navigation_view_item_unchecked">@color/on_surface_medium</color>
+
+    <color name="ic_launcher_background">#011A1E</color>
+
+    <color name="bucket_inbox">#595959</color>
+    <color name="bucket_today">#ffad5b</color>
+    <color name="bucket_planned">#5e5ce5</color>
+    <color name="bucket_someday">#a27e4e</color>
+    <color name="bucket_next">#36b26a</color>
+    <color name="projects">#7b66c6</color>
+    <color name="history">#394d82</color>
+</resources>
