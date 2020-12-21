@@ -24,9 +24,6 @@ class DataSource(override var app: App) : DataSourceInterface, KodeinAware {
     private val spMain: MeowSharedPreferences by instance<MeowSharedPreferences>("spMain")
     private val spUpdate: MeowSharedPreferences by instance<MeowSharedPreferences>("spUpdate")
 
-    suspend fun getTokenFromApi(request: Authenticate.Api.RequestLogin) =
-        api.createServiceByAdapter<Authenticate.Api>().getToken(request)
-
     fun isLogin() = fetchUser().username.isNotNullOrEmpty()
     fun fetchUser() = spMain.get("user", User())
     fun saveUser(it: User) = spMain.put("user", it)

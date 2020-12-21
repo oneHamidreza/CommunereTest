@@ -4,6 +4,7 @@
     <string name="login_username">Username</string>
     <string name="login_password">Password</string>
     <string name="login_action">Login</string>
+    <string name="login_action_register">Register</string>
     <string name="dialog_login">Logging into account</string>
     <string name="warn_login_success">You\'ve logged into account!</string>
     <string name="warn_login_unauthorized">Username or password is incorrect!</string>

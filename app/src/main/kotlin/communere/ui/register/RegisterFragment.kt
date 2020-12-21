@@ -1,4 +1,4 @@
-package communere.ui.login
+package communere.ui.register
 
 import android.os.Bundle
 import android.view.View
@@ -6,40 +6,38 @@ import androidx.navigation.fragment.findNavController
 import communere.R
 import communere.data.ApiEvent
 import communere.data.Authenticate
-import communere.databinding.FragmentLoginBinding
+import communere.databinding.FragmentRegisterBinding
 import communere.ui.base.BaseFragment
 import meow.ktx.instanceViewModel
 import meow.ktx.safeObserve
 import meow.ktx.toastL
 
 /**
- * Login Fragment class.
+ * Register Fragment class.
  *
  * @author  Hamidreza Etebarian
  * @version 1.0.0
  * @since   2020-12-21
  */
 
-class LoginFragment : BaseFragment<FragmentLoginBinding>() {
+class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
 
-    private val viewModel: LoginViewModel by instanceViewModel()
-    override fun layoutId() = R.layout.fragment_login
+    private val viewModel: RegisterViewModel by instanceViewModel()
+    override fun layoutId() = R.layout.fragment_register
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.btAction.setOnClickListener {
-            val request = Authenticate.Api.RequestLogin(
+            val request = Authenticate.Api.RequestRegister(
+                fullname = binding.etFullname.textString.trim(),
                 username = binding.etUsername.textString.trim(),
-                password = binding.etPassword.textString
+                password = binding.etPassword.textString,
+                passwordConfirm = binding.etPassword.textString
             )
             if (request.validate())
                 callApiAndObserve(request)
             else
-                toastL(R.string.warn_login_unauthorized)
-        }
-
-        binding.btActionRegister.setOnClickListener {
-            findNavController().navigate(LoginFragmentDirections.actionFragmentLoginToFragmentRegister())
+                toastL(R.string.warn_register_invalid)
         }
     }
 
@@ -51,7 +49,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
         }
     }
 
-    private fun callApiAndObserve(request: Authenticate.Api.RequestLogin) {
+    private fun callApiAndObserve(request: Authenticate.Api.RequestRegister) {
         viewModel.eventLiveData.safeObserve(this) {
             when (it) {
                 is ApiEvent.Loading -> {
@@ -61,21 +59,17 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
                         binding.pb.hide()
                 }
                 is ApiEvent.Success -> {
-                    toastL(R.string.warn_login_success)
-                    findNavController().navigate(LoginFragmentDirections.actionFragmentLoginToFragmentHome())
+                    toastL(R.string.warn_register_success)
+                    findNavController().navigate(RegisterFragmentDirections.actionFragmentRegisterToFragmentHome())
                 }
                 is ApiEvent.Error -> {
                     val data = it.data as? Authenticate.Api.ResponseLogin
-                    toastL(data?.message ?: getString(R.string.warn_login_failed))
+                    toastL(data?.message ?: getString(R.string.warn_register_failed))
                 }
                 else -> {
                 }
             }
         }
         viewModel.callApi(request)
-    }
-
-    override fun onKeyboardStateChanged(isKeyboardUp: Boolean, isFromOnCreate: Boolean) {
-        binding.llLogo.visibility = if (isKeyboardUp) View.GONE else View.VISIBLE
     }
 }

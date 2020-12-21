@@ -13,9 +13,24 @@
     <fragment
         android:id="@+id/fragmentLogin"
         android:name="communere.ui.login.LoginFragment"
-        tools:layout="@layout/fragment_login" >
+        tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_fragmentLogin_to_fragmentHome"
+            app:destination="@id/fragmentHome"
+            app:popUpTo="@+id/nav_graph"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_fragmentLogin_to_fragmentRegister"
+            app:destination="@id/fragmentRegister" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentRegister"
+        android:name="communere.ui.register.RegisterFragment"
+        android:label="@string/fragment_register"
+        tools:layout="@layout/fragment_register">
+        <action
+            android:id="@+id/action_fragmentRegister_to_fragmentHome"
             app:destination="@id/fragmentHome"
             app:popUpTo="@+id/nav_graph"
             app:popUpToInclusive="true" />

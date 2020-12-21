@@ -1,5 +1,10 @@
 package communere.di
 
+import communere.data.Authenticate
+import communere.ui.home.HomeViewModel
+import communere.ui.login.LoginViewModel
+import communere.ui.main.MainViewModel
+import communere.ui.register.RegisterViewModel
 import meow.ktx.bindAutoTag
 import org.kodein.di.Kodein.Module
 import org.kodein.di.direct
@@ -7,10 +12,6 @@ import org.kodein.di.erased.bind
 import org.kodein.di.erased.instance
 import org.kodein.di.erased.provider
 import org.kodein.di.erased.singleton
-import communere.data.Authenticate
-import communere.ui.home.HomeViewModel
-import communere.ui.login.LoginViewModel
-import communere.ui.main.MainViewModel
 
 /**
  * The Module of MVVM (ViewModels, Repositories).
@@ -27,6 +28,12 @@ val mvvmModule = Module("MVVM Module", false) {
     }
     bindAutoTag<LoginViewModel>() with provider {
         LoginViewModel(
+            kodein.direct.instance(),
+            instance()
+        )
+    }
+    bindAutoTag<RegisterViewModel>() with provider {
+        RegisterViewModel(
             kodein.direct.instance(),
             instance()
         )

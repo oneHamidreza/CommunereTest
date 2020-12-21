@@ -32,7 +32,7 @@ class Authenticate {
                 return """
                     {
                         "status": true,
-                        "name": "Admin",
+                        "fullname": "Admin",
                         "username": "admin",
                         "user_type": 1,
                         "token": "SOME_TOKEN_VALUE"
@@ -43,8 +43,7 @@ class Authenticate {
                 return """
                     {
                         "status" : true,
-                        "name" : "Hamidreza",
-                        "family" : "Etebarian",
+                        "fullname" : "Hamidreza Etebarian",
                         "username" : "$username",
                         "user_type" : 0,
                         "token" : "SOME_TOKEN_VALUE"
@@ -59,6 +58,18 @@ class Authenticate {
                 """.trimIndent().fromJson<Api.ResponseLogin>()!!
             }
 
+        }
+
+        fun registerFromApi(request: Api.RequestRegister): Api.ResponseRegister {
+            return """
+                    {
+                        "status": true,
+                        "fullname": "${request.fullname}",
+                        "username": "${request.username}",
+                        "user_type": 0,
+                        "token": "SOME_TOKEN_VALUE"
+                    }
+                """.trimIndent().fromJson<Api.ResponseRegister>()!!
         }
 
     }
@@ -78,28 +89,17 @@ class Authenticate {
         data class ResponseLogin(
             @Json(name = "status") var status: Boolean = false,
             @Json(name = "message") var message: String? = null,
-            @Json(name = "name") var name: String? = null,
-            @Json(name = "family") var family: String? = null,
+            @Json(name = "fullname") var fullname: String? = null,
             @Json(name = "username") var username: String? = null,
             @Json(name = "user_type") var userTypeValue: Int = UserTypes.USER.ordinal,
             @Json(name = "token") var token: String? = null
         ) {
             val user: User
-                get() {
-                    return User(
-                        username = username,
-                        userTypeValue = userTypeValue
-                    ).apply {
-                        alias = buildString {
-                            if (name.isNotNullOrEmpty()) {
-                                append(name)
-                                append(" ")
-                            }
-                            if (family.isNotNullOrEmpty())
-                                append(family)
-                        }
-                    }
-                }
+                get() = User(
+                    alias = fullname ?: "",
+                    username = username,
+                    userTypeValue = userTypeValue
+                )
 
             fun decodeJWT(): User {
                 val jwt = JWT(token ?: "")
@@ -108,6 +108,36 @@ class Authenticate {
                 val avatarUrl = AppApi.getImageUrl(jwt.getClaim("avatar").asString())
                 return User(alias = name, username = username, avatarUrl = avatarUrl)
             }
+        }
+
+        class RequestRegister(
+            @Json(name = "fullname") var fullname: String? = null,
+            @Json(name = "username") var username: String? = null,
+            @Json(name = "password") var password: String? = null,
+            @Json(name = "password_confirm") var passwordConfirm: String? = null
+        ) {
+            fun validate(): Boolean {
+                return fullname.isNotNullOrEmpty() &&
+                        username?.length ?: 0 >= 5 &&
+                        password?.length ?: 0 >= 6 &&
+                        password == passwordConfirm
+            }
+        }
+
+        data class ResponseRegister(
+            @Json(name = "status") var status: Boolean = false,
+            @Json(name = "message") var message: String? = null,
+            @Json(name = "fullname") var fullname: String? = null,
+            @Json(name = "username") var username: String? = null,
+            @Json(name = "user_type") var userTypeValue: Int = UserTypes.USER.ordinal,
+            @Json(name = "token") var token: String? = null
+        ) {
+            val user: User
+                get() = User(
+                    alias = fullname ?: "",
+                    username = username,
+                    userTypeValue = userTypeValue,
+                )
         }
 
         @POST("authentication_token")

@@ -51,18 +51,18 @@
                     android:orientation="vertical">
 
                     <LinearLayout
+                        meow_gap="@{16}"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
                         android:orientation="vertical"
-                        android:padding="24dp"
-                        meow_gap="@{16}">
+                        android:padding="24dp">
 
                         <meow.widget.MeowTextField
                             android:id="@+id/etUsername"
                             style="@style/App.TextField.Login"
-                            android:textDirection="ltr"
                             android:hint="@string/login_username"
+                            android:textDirection="ltr"
                             app:errorEnabled="true"
                             app:meow_inputType="text"
                             app:meow_validateType="empty"
@@ -80,10 +80,17 @@
                         <Button
                             android:id="@+id/btAction"
                             style="@style/Meow.Button"
-                            android:layout_marginTop="16dp"
                             android:layout_width="match_parent"
-                            android:minHeight="64dp"
+                            android:layout_marginTop="16dp"
                             android:text="@string/login_action" />
+
+                        <Button
+                            android:id="@+id/btActionRegister"
+                            style="@style/Meow.Button.Outlined"
+                            android:layout_width="wrap_content"
+                            android:layout_marginTop="48dp"
+                            android:layout_gravity="end"
+                            android:text="@string/login_action_register" />
 
                     </LinearLayout>
 

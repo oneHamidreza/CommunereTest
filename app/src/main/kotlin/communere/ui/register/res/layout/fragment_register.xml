@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="communere.ui.register.RegisterViewModel" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    meow_gap="@{16}"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="24dp">
+
+                    <meow.widget.MeowTextField
+                        android:id="@+id/etFullname"
+                        style="@style/App.TextField.Login"
+                        android:hint="@string/register_fullname"
+                        android:textDirection="ltr"
+                        app:errorEnabled="true"
+                        app:meow_inputType="textPersonName"
+                        app:startIconDrawable="@drawable/ic_person_outline" />
+
+                    <meow.widget.MeowTextField
+                        android:id="@+id/etUsername"
+                        style="@style/App.TextField.Login"
+                        android:hint="@string/register_username"
+                        android:textDirection="ltr"
+                        app:errorEnabled="true"
+                        app:meow_inputType="text"
+                        app:startIconDrawable="@drawable/ic_person" />
+
+                    <meow.widget.MeowTextField
+                        android:id="@+id/etPassword"
+                        style="@style/App.TextField.Login"
+                        android:hint="@string/register_password"
+                        app:errorEnabled="true"
+                        app:meow_inputType="textPassword"
+                        app:startIconDrawable="@drawable/ic_pass" />
+
+                    <meow.widget.MeowTextField
+                        android:id="@+id/etPasswordConfirm"
+                        style="@style/App.TextField.Login"
+                        android:hint="@string/register_password_confirm"
+                        app:errorEnabled="true"
+                        app:meow_inputType="textPassword"
+                        app:startIconDrawable="@drawable/ic_pass" />
+
+                    <Button
+                        android:id="@+id/btAction"
+                        style="@style/Meow.Button"
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/register_action" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+        <meow.widget.MeowProgressBar
+            android:id="@+id/pb"
+            style="@style/Meow.ProgressBar" />
+
+    </FrameLayout>
+
+</layout>
