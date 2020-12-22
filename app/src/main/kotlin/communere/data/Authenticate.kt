@@ -2,6 +2,8 @@ package communere.data
 
 import com.squareup.moshi.Json
 import communere.Constants
+import communere.utils.validatePassword
+import communere.utils.validateUsername
 import meow.ktx.fromJson
 import meow.ktx.isNotNullOrEmpty
 import meow.ktx.logD
@@ -79,8 +81,8 @@ class Authenticate {
             @Json(name = "password") var password: String? = null
         ) {
             fun validate(): Boolean {
-                return username?.length ?: 0 >= 5 &&
-                        password?.length ?: 0 >= 6
+                return username.validateUsername() &&
+                        password.validatePassword()
             }
         }
 
@@ -112,8 +114,8 @@ class Authenticate {
         ) {
             fun validate(): Boolean {
                 return fullname.isNotNullOrEmpty() &&
-                        username?.length ?: 0 >= 5 &&
-                        password?.length ?: 0 >= 6 &&
+                        username.validateUsername() &&
+                        password.validatePassword() &&
                         password == passwordConfirm
             }
         }

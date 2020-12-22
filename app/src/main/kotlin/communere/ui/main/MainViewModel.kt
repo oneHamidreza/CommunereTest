@@ -1,9 +1,10 @@
 package communere.ui.main
 
 import android.view.View
+import androidx.lifecycle.MutableLiveData
 import communere.App
 import meow.core.arch.MeowViewModel
-import meow.core.arch.SingleLiveData
+import meow.ktx.logD
 
 /**
  * Main View Model class.
@@ -15,10 +16,11 @@ import meow.core.arch.SingleLiveData
 
 class MainViewModel(override var app:App) : MeowViewModel(app) {
 
-    val logoutLiveData = SingleLiveData<Boolean>()
+    val logoutLiveData = MutableLiveData<Boolean>()
 
     fun logout() {
         app.dataSource.clear()
+        logD(m = "logOut called")
         logoutLiveData.postValue(true)
     }
 

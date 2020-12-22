@@ -1,9 +1,9 @@
 package communere.data
 
 import com.squareup.moshi.Json
+import communere.utils.validateEmail
+import communere.utils.validateUsername
 import meow.ktx.fromJson
-import meow.ktx.isValidEmail
-import meow.ktx.isValidUsername
 import meow.ktx.logD
 
 /**
@@ -49,8 +49,8 @@ class UserUpdate {
             @Json(name = "email") var email: String? = null
         ) {
             fun validate(): Boolean {
-                return username.isValidUsername() &&
-                        email.isValidEmail()
+                return username.validateUsername() &&
+                        email.validateEmail()
             }
         }
 

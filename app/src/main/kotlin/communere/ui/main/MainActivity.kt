@@ -1,5 +1,6 @@
 package communere.ui.main
 
+import android.os.Bundle
 import android.view.View
 import androidx.core.view.GravityCompat
 import androidx.navigation.NavController
@@ -37,6 +38,15 @@ class MainActivity : MeowActivity<ActivityMainBinding>() {
 
     override fun layoutId() = R.layout.activity_main
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        viewModel.logoutLiveData.safeObserve {
+            if (it)
+                recreate()
+        }
+    }
+
     override fun initViewModel() {
         binding.viewModel = viewModel
         setSupportActionBar(binding.toolbar)
@@ -55,11 +65,6 @@ class MainActivity : MeowActivity<ActivityMainBinding>() {
         } else {
             navController.popBackStack()
             navController.navigate(R.id.fragmentUserUpdate)
-        }
-
-        viewModel.logoutLiveData.safeObserve(this) {
-            if (it)
-                recreate()
         }
     }
 
