@@ -60,7 +60,7 @@ class UserIndexFragment : BaseFragment<FragmentUserIndexBinding>() {
 
     override fun initViewModel() {
         binding.viewModel = viewModel
-        viewModel.removeItemLiveData.safeObserve(this) {
+        viewModel.removeItemLiveData.safeObserve(viewLifecycleOwner) {
             if (it)
                 toastL(R.string.warn_userIndex_remove)
         }

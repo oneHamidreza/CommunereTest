@@ -57,7 +57,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
                     toastL(R.string.warn_login_success)
                     val user = it.data as User
                     if (user.isAdmin) {
-                        findNavController().popBackStack()
+                        findNavController().popBackStack() // Todo not working ?
                         findNavController().navigate(R.id.fragmentUserIndex)
                     } else {
                         findNavController().popBackStack()

@@ -41,7 +41,7 @@ class MainActivity : MeowActivity<ActivityMainBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.logoutLiveData.safeObserve {
+        viewModel.logoutLiveData.safeObserve(this) {
             if (it)
                 recreate()
         }

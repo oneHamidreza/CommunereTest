@@ -41,7 +41,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
                 toastL(R.string.warn_register_invalid)
         }
 
-        viewModel.eventLiveData.safeObserve(this) {
+        viewModel.eventLiveData.safeObserve(viewLifecycleOwner) {
             when (it) {
                 is ApiEvent.Loading -> {
                     if (it.data)

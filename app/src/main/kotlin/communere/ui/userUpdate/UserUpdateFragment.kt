@@ -39,7 +39,7 @@ class UserUpdateFragment : BaseFragment<FragmentUserUpdateBinding>() {
         super.onViewCreated(view, savedInstanceState)
         model = args.model.fromJson()
 
-        viewModel.eventLiveData.safeObserve(this) {
+        viewModel.eventLiveData.safeObserve(viewLifecycleOwner) {
             when (it) {
                 is ApiEvent.Loading -> {
                     showOrHideLoading(it.data)
@@ -56,7 +56,7 @@ class UserUpdateFragment : BaseFragment<FragmentUserUpdateBinding>() {
             }
         }
 
-        viewModel.deleteEventLiveData.safeObserve(this) {
+        viewModel.deleteEventLiveData.safeObserve(viewLifecycleOwner) {
             when (it) {
                 is ApiEvent.Loading -> {
                     showOrHideLoading(it.data)
