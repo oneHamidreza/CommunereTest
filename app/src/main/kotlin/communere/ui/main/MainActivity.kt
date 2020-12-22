@@ -1,5 +1,6 @@
 package communere.ui.main
 
+import android.view.View
 import androidx.core.view.GravityCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -13,10 +14,7 @@ import communere.data.UserTypes
 import communere.databinding.ActivityMainBinding
 import communere.widget.navheader.NavHeaderView
 import meow.core.ui.MeowActivity
-import meow.ktx.alert
-import meow.ktx.getColorCompat
-import meow.ktx.instanceViewModel
-import meow.ktx.sdkNeed
+import meow.ktx.*
 import org.kodein.di.erased.instance
 
 /**
@@ -58,6 +56,11 @@ class MainActivity : MeowActivity<ActivityMainBinding>() {
             navController.popBackStack()
             navController.navigate(R.id.fragmentUserUpdate)
         }
+
+        viewModel.logoutLiveData.safeObserve(this) {
+            if (it)
+                recreate()
+        }
     }
 
     private fun setupNavigation() {
@@ -66,7 +69,10 @@ class MainActivity : MeowActivity<ActivityMainBinding>() {
 
         navController = navHostFragment.navController.apply {
             addOnDestinationChangedListener { _, destination, _ ->
-//                when (destination.id) {
+                when (destination.id) {
+                    R.id.fragmentRegister, R.id.fragmentLogin -> binding.btLogout.visibility =
+                        View.GONE
+                    else -> binding.btLogout.visibility = View.VISIBLE
 //                    R.id.fragmentLogin -> {
 //                        logD(m = "changed Nav : Login")
 //                        binding.toolbar.visibility = View.GONE
@@ -76,7 +82,7 @@ class MainActivity : MeowActivity<ActivityMainBinding>() {
 //                        binding.toolbar.visibility = View.VISIBLE
 //                        binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
 //                    }
-//                }
+                }
                 updateNavigationHeader()
             }
         }
@@ -102,7 +108,6 @@ class MainActivity : MeowActivity<ActivityMainBinding>() {
                         alert(R.string.logout_alert_title, R.string.logout_alert_message)
                             .setPositiveButton(R.string.yes) { _, _ ->
                                 viewModel?.logout()
-                                recreate()
                             }
                             .setNegativeButton(R.string.no) { _, _ ->
 

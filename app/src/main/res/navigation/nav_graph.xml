@@ -7,11 +7,11 @@
 
     <action
         android:id="@+id/action_fragmentHome_to_fragmentUserIndex"
-        app:destination="@id/fragmentUserUpdate" />
+        app:destination="@id/fragmentUserIndex" />
 
     <action
         android:id="@+id/action_fragmentHome_to_fragmentUserUpdate"
-        app:destination="@id/fragmentUserIndex" />
+        app:destination="@id/fragmentUserUpdate" />
 
     <fragment
         android:id="@+id/fragmentHome"
@@ -32,9 +32,7 @@
             app:destination="@id/fragmentRegister" />
         <action
             android:id="@+id/action_fragmentLogin_to_fragmentUserIndex"
-            app:destination="@id/fragmentUserIndex"
-            app:popUpTo="@+id/nav_graph"
-            app:popUpToInclusive="true" />
+            app:destination="@id/fragmentUserIndex" />
     </fragment>
 
     <fragment
@@ -62,7 +60,8 @@
             <argument
                 android:name="model"
                 app:argType="string"
-                app:nullable="true" />
+                app:nullable="true"
+                android:defaultValue="@null" />
 
         </action>
 
@@ -76,7 +75,8 @@
         <argument
             android:name="model"
             app:argType="string"
-            app:nullable="true" />
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
 
 </navigation>

@@ -65,9 +65,11 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
                     toastL(R.string.warn_login_success)
                     val user = it.data as User
                     if (user.isAdmin) {
-                        findNavController().navigate(LoginFragmentDirections.actionFragmentLoginToFragmentUserIndex())
+                        findNavController().popBackStack()
+                        findNavController().navigate(R.id.fragmentUserIndex)
                     } else {
-                        findNavController().navigate(LoginFragmentDirections.actionFragmentHomeToFragmentUserUpdate())
+                        findNavController().popBackStack()
+                        findNavController().navigate(R.id.fragmentUserUpdate)
                     }
                 }
                 is ApiEvent.Error -> {
