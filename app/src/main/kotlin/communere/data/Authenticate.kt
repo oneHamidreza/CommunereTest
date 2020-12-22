@@ -1,14 +1,10 @@
 package communere.data
 
-import com.auth0.android.jwt.JWT
 import com.squareup.moshi.Json
 import communere.Constants
-import communere.di.AppApi
 import meow.ktx.fromJson
 import meow.ktx.isNotNullOrEmpty
 import meow.ktx.logD
-import retrofit2.http.Body
-import retrofit2.http.POST
 
 /**
  * Authenticate class.
@@ -106,20 +102,11 @@ class Authenticate {
                 ).apply {
                     logD(m = "userType value : $userTypeValue")
                 }
-
-            fun decodeJWT(): User {
-                val jwt = JWT(token ?: "")
-                val name = jwt.getClaim("name").asString()
-                val username = jwt.getClaim("username").asString()
-                val avatarUrl = AppApi.getImageUrl(jwt.getClaim("avatar").asString())
-                return User(alias = name, username = username, avatarUrl = avatarUrl)
-            }
         }
 
         class RequestRegister(
             @Json(name = "fullname") var fullname: String? = null,
             @Json(name = "username") var username: String? = null,
-            @Json(name = "email") var email: String? = null,
             @Json(name = "password") var password: String? = null,
             @Json(name = "password_confirm") var passwordConfirm: String? = null
         ) {
@@ -148,10 +135,5 @@ class Authenticate {
                     userTypeValue = userTypeValue,
                 )
         }
-
-        @POST("authentication_token")
-        suspend fun getToken(
-            @Body request: RequestLogin
-        ): ResponseLogin
     }
 }

@@ -16,15 +16,12 @@
 
 package communere.data
 
-import android.content.res.Resources
-import com.etebarian.meowframework.R
-
 /**
  * Api Event class.
  *
  * @author  Hamidreza Etebarian
  * @version 1.0.0
- * @since   2020-03-01
+ * @since   2020-12-21
  */
 
 sealed class ApiEvent<T> {
@@ -36,11 +33,5 @@ sealed class ApiEvent<T> {
     data class Success<T>(override val data: T) : ApiEvent<T>()
 
     data class Error<T>(override val data: T) : ApiEvent<T>()
-
-    data class Cancellation(override val data: Nothing? = null) : ApiEvent<Nothing>() {
-        fun title(resources: Resources) = resources.getString(R.string.error_cancellation_title)
-        fun message(resources: Resources) =
-            resources.getString(R.string.error_cancellation_message)
-    }
 
 }

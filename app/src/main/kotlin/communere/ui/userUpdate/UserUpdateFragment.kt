@@ -27,7 +27,7 @@ import org.kodein.di.erased.instance
 
 class UserUpdateFragment : BaseFragment<FragmentUserUpdateBinding>() {
 
-    val args by navArgs<UserUpdateFragmentArgs>()
+    private val args by navArgs<UserUpdateFragmentArgs>()
     var model: User? = null
 
     private val viewModel: UserUpdateViewModel by instanceViewModel()

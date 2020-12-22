@@ -33,6 +33,7 @@
                 <com.google.android.material.appbar.MaterialToolbar
                     android:id="@+id/toolbar"
                     style="@style/Meow.Toolbar.Surface"
+                    android:visibility="gone"
                     app:title="@string/app_name"/>
 
             </com.google.android.material.appbar.AppBarLayout>

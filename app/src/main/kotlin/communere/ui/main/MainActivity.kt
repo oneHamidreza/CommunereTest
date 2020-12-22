@@ -1,8 +1,6 @@
 package communere.ui.main
 
-import android.view.View
 import androidx.core.view.GravityCompat
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -13,10 +11,12 @@ import communere.R
 import communere.data.DataSource
 import communere.data.UserTypes
 import communere.databinding.ActivityMainBinding
-import communere.ui.home.HomeViewModel
 import communere.widget.navheader.NavHeaderView
 import meow.core.ui.MeowActivity
-import meow.ktx.*
+import meow.ktx.alert
+import meow.ktx.getColorCompat
+import meow.ktx.instanceViewModel
+import meow.ktx.sdkNeed
 import org.kodein.di.erased.instance
 
 /**
@@ -36,7 +36,6 @@ class MainActivity : MeowActivity<ActivityMainBinding>() {
     private val dataSource by instance<DataSource>()
 
     private val viewModel: MainViewModel by instanceViewModel()
-    private val homeViewModel: HomeViewModel by instanceViewModel()
 
     override fun layoutId() = R.layout.activity_main
 
@@ -67,17 +66,17 @@ class MainActivity : MeowActivity<ActivityMainBinding>() {
 
         navController = navHostFragment.navController.apply {
             addOnDestinationChangedListener { _, destination, _ ->
-                when (destination.id) {
-                    R.id.fragmentLogin -> {
-                        logD(m = "changed Nav : Login")
-                        binding.toolbar.visibility = View.GONE
-                        binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
-                    }
-                    else -> {
-                        binding.toolbar.visibility = View.VISIBLE
-                        binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
-                    }
-                }
+//                when (destination.id) {
+//                    R.id.fragmentLogin -> {
+//                        logD(m = "changed Nav : Login")
+//                        binding.toolbar.visibility = View.GONE
+//                        binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+//                    }
+//                    else -> {
+//                        binding.toolbar.visibility = View.VISIBLE
+//                        binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+//                    }
+//                }
                 updateNavigationHeader()
             }
         }
