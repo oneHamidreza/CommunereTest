@@ -8,6 +8,7 @@ import communere.data.ApiEvent
 import communere.data.Authenticate
 import communere.databinding.FragmentRegisterBinding
 import communere.ui.base.BaseFragment
+import communere.utils.hideKeyboard
 import meow.ktx.instanceViewModel
 import meow.ktx.safeObserve
 import meow.ktx.toastL
@@ -59,8 +60,10 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
                         binding.pb.hide()
                 }
                 is ApiEvent.Success -> {
+                    hideKeyboard()
                     toastL(R.string.warn_register_success)
-                    findNavController().navigate(RegisterFragmentDirections.actionFragmentHomeToFragmentUserUpdate())
+                    findNavController().popBackStack()
+                    findNavController().navigate(R.id.fragmentUserUpdate)
                 }
                 is ApiEvent.Error -> {
                     val data = it.data as? Authenticate.Api.ResponseLogin

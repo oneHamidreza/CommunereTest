@@ -9,6 +9,7 @@ import communere.data.Authenticate
 import communere.data.User
 import communere.databinding.FragmentLoginBinding
 import communere.ui.base.BaseFragment
+import communere.utils.hideKeyboard
 import meow.ktx.instanceViewModel
 import meow.ktx.safeObserve
 import meow.ktx.toastL
@@ -62,6 +63,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
                         binding.pb.hide()
                 }
                 is ApiEvent.Success -> {
+                    hideKeyboard()
                     toastL(R.string.warn_login_success)
                     val user = it.data as User
                     if (user.isAdmin) {
@@ -71,6 +73,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
                         findNavController().popBackStack()
                         findNavController().navigate(R.id.fragmentUserUpdate)
                     }
+                    hideKeyboard()
                 }
                 is ApiEvent.Error -> {
                     val data = it.data as? Authenticate.Api.ResponseLogin
