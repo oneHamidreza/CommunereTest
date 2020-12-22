@@ -36,21 +36,11 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
                 passwordConfirm = binding.etPassword.textString
             )
             if (request.validate())
-                callApiAndObserve(request)
+                callApi(request)
             else
                 toastL(R.string.warn_register_invalid)
         }
-    }
 
-    override fun initViewModel() {
-        binding.viewModel = viewModel
-        binding.apply {
-            etUsername.apiField = "username"
-            etPassword.apiField = "password"
-        }
-    }
-
-    private fun callApiAndObserve(request: Authenticate.Api.RequestRegister) {
         viewModel.eventLiveData.safeObserve(this) {
             when (it) {
                 is ApiEvent.Loading -> {
@@ -73,6 +63,17 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
                 }
             }
         }
+    }
+
+    override fun initViewModel() {
+        binding.viewModel = viewModel
+        binding.apply {
+            etUsername.apiField = "username"
+            etPassword.apiField = "password"
+        }
+    }
+
+    private fun callApi(request: Authenticate.Api.RequestRegister) {
         viewModel.callApi(request)
     }
 }

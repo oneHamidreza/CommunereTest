@@ -39,19 +39,54 @@ class UserUpdateFragment : BaseFragment<FragmentUserUpdateBinding>() {
         super.onViewCreated(view, savedInstanceState)
         model = args.model.fromJson()
 
+        viewModel.eventLiveData.safeObserve(this) {
+            when (it) {
+                is ApiEvent.Loading -> {
+                    showOrHideLoading(it.data)
+                }
+                is ApiEvent.Success -> {
+                    toastL(R.string.warn_userUpdate_success)
+                }
+                is ApiEvent.Error -> {
+                    val data = it.data as? UserUpdate.Api.ResponseUpdate
+                    toastL(data?.message ?: getString(R.string.warn_userUpdate_failed))
+                }
+                else -> {
+                }
+            }
+        }
+
+        viewModel.deleteEventLiveData.safeObserve(this) {
+            when (it) {
+                is ApiEvent.Loading -> {
+                    showOrHideLoading(it.data)
+                }
+                is ApiEvent.Success -> {
+                    toastL(R.string.warn_userUpdate_delete_success)
+                    activity().recreate()
+                }
+                is ApiEvent.Error -> {
+                    val data = it.data as? UserUpdate.Api.ResponseUpdate
+                    toastL(data?.message ?: getString(R.string.warn_userUpdate_delete_failed))
+                }
+                else -> {
+                }
+            }
+        }
+
         binding.btAction.setOnClickListener {
             val request = UserUpdate.Api.RequestUpdate(
                 username = binding.etUsername.textString.trim(),
                 email = binding.etEmail.textString,
             )
             if (request.validate())
-                callApiAndObserve(request)
+                callApi(request)
             else
                 toastL(R.string.warn_userUpdate_invalid)
         }
 
         binding.btActionDelete.setOnClickListener {
-            callApiDeleteAndObserve()
+            callApiDelete()
         }
 
         viewModel.fetchData()
@@ -67,51 +102,16 @@ class UserUpdateFragment : BaseFragment<FragmentUserUpdateBinding>() {
         binding.viewModel = viewModel
     }
 
-    private fun callApiAndObserve(request: UserUpdate.Api.RequestUpdate) {
-        viewModel.eventLiveData.safeObserve(this) {
-            when (it) {
-                is ApiEvent.Loading -> {
-                    if (it.data)
-                        binding.pb.show()
-                    else
-                        binding.pb.hide()
-                }
-                is ApiEvent.Success -> {
-                    toastL(R.string.warn_userUpdate_success)
-                }
-                is ApiEvent.Error -> {
-                    val data = it.data as? UserUpdate.Api.ResponseUpdate
-                    toastL(data?.message ?: getString(R.string.warn_userUpdate_failed))
-                }
-                else -> {
-                }
-            }
-        }
+    private fun callApi(request: UserUpdate.Api.RequestUpdate) {
         viewModel.callApi(request)
     }
 
-    private fun callApiDeleteAndObserve() {
-        viewModel.deleteEventLiveData.safeObserve(this) {
-            when (it) {
-                is ApiEvent.Loading -> {
-                    if (it.data)
-                        binding.pb.show()
-                    else
-                        binding.pb.hide()
-                }
-                is ApiEvent.Success -> {
-                    toastL(R.string.warn_userUpdate_delete_success)
-                    activity().recreate()
-                }
-                is ApiEvent.Error -> {
-                    val data = it.data as? UserUpdate.Api.ResponseUpdate
-                    toastL(data?.message ?: getString(R.string.warn_userUpdate_delete_failed))
-                }
-                else -> {
-                }
-            }
-        }
+    private fun callApiDelete() {
         viewModel.deleteUserApi()
+    }
+
+    private fun showOrHideLoading(isShowing: Boolean) {
+        if (isShowing) binding.pb.show() else binding.pb.hide()
     }
 
     private fun updateUI(user: User) {

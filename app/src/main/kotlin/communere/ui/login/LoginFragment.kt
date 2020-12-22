@@ -35,7 +35,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
                 password = binding.etPassword.textString
             )
             if (request.validate())
-                callApiAndObserve(request)
+                callApi(request)
             else
                 toastL(R.string.warn_login_unauthorized)
         }
@@ -43,18 +43,8 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
         binding.btActionRegister.setOnClickListener {
             findNavController().navigate(LoginFragmentDirections.actionFragmentLoginToFragmentRegister())
         }
-    }
 
-    override fun initViewModel() {
-        binding.viewModel = viewModel
-        binding.apply {
-            etUsername.apiField = "username"
-            etPassword.apiField = "password"
-        }
-    }
-
-    private fun callApiAndObserve(request: Authenticate.Api.RequestLogin) {
-        viewModel.eventLiveData.safeObserve(this) {
+        viewModel.eventLiveData.safeObserve(viewLifecycleOwner) {
             when (it) {
                 is ApiEvent.Loading -> {
                     if (it.data)
@@ -83,6 +73,17 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
                 }
             }
         }
+    }
+
+    override fun initViewModel() {
+        binding.viewModel = viewModel
+        binding.apply {
+            etUsername.apiField = "username"
+            etPassword.apiField = "password"
+        }
+    }
+
+    private fun callApi(request: Authenticate.Api.RequestLogin) {
         viewModel.callApi(request)
     }
 
