@@ -18,6 +18,7 @@ package communere.ui.userIndex
 
 import android.os.Bundle
 import android.view.View
+import androidx.navigation.findNavController
 import communere.R
 import communere.data.User
 import communere.databinding.FragmentUserIndexBinding
@@ -25,6 +26,7 @@ import communere.ui.base.BaseFragment
 import meow.core.arch.MeowFlow
 import meow.ktx.instanceViewModel
 import meow.ktx.safeObserve
+import meow.ktx.toJson
 import meow.ktx.toastL
 import meow.widget.decoration.MeowDividerDecoration
 
@@ -46,7 +48,13 @@ class UserIndexFragment : BaseFragment<FragmentUserIndexBinding>() {
 
         binding.recyclerView.apply {
             addItemDecoration(MeowDividerDecoration(context))
-            adapter = UserAdapter(viewModel)
+            adapter = UserAdapter(viewModel) {
+                findNavController().navigate(
+                    UserIndexFragmentDirections.actionFragmentUserIndexToFragmentUserUpdate(
+                        it.toJson()
+                    )
+                )
+            }
         }
     }
 

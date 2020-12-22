@@ -2,15 +2,20 @@ package communere.ui.userUpdate
 
 import android.os.Bundle
 import android.view.View
+import androidx.navigation.fragment.navArgs
 import communere.R
 import communere.data.ApiEvent
+import communere.data.DataSource
 import communere.data.User
 import communere.data.UserUpdate
 import communere.databinding.FragmentUserUpdateBinding
 import communere.ui.base.BaseFragment
+import communere.utils.setEnabledWithAlpha
+import meow.ktx.fromJson
 import meow.ktx.instanceViewModel
 import meow.ktx.safeObserve
 import meow.ktx.toastL
+import org.kodein.di.erased.instance
 
 /**
  * User Update Fragment class.
@@ -22,11 +27,18 @@ import meow.ktx.toastL
 
 class UserUpdateFragment : BaseFragment<FragmentUserUpdateBinding>() {
 
+    val args by navArgs<UserUpdateFragmentArgs>()
+    var model: User? = null
+
     private val viewModel: UserUpdateViewModel by instanceViewModel()
+    private val dataSource by instance<DataSource>()
+
     override fun layoutId() = R.layout.fragment_user_update
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        model = args.model.fromJson()
+
         binding.btAction.setOnClickListener {
             val request = UserUpdate.Api.RequestUpdate(
                 username = binding.etUsername.textString.trim(),
@@ -44,8 +56,11 @@ class UserUpdateFragment : BaseFragment<FragmentUserUpdateBinding>() {
 
         viewModel.fetchData()
         viewModel.userLiveData.safeObserve(this) {
-            updateUI(it)
+            if (model == null) // Only users
+                updateUI(it)
         }
+        if (model != null)
+            updateUI(model!!)
     }
 
     override fun initViewModel() {
@@ -103,9 +118,11 @@ class UserUpdateFragment : BaseFragment<FragmentUserUpdateBinding>() {
         binding.apply {
             etEmail.getEditText()?.setText(user.email?.trim() ?: "")
             etUsername.getEditText()?.setText(user.username?.trim() ?: "")
-            user.isAdmin.apply {
-                etEmail.isEnabled = !this
-                etUsername.isEnabled = !this
+            dataSource.fetchUser().isAdmin.apply {
+                etEmail.setEnabledWithAlpha(!this)
+                etUsername.setEnabledWithAlpha(!this)
+                btAction.visibility = if (this) View.GONE else View.VISIBLE
+                btActionDelete.visibility = if (this) View.GONE else View.VISIBLE
             }
         }
     }

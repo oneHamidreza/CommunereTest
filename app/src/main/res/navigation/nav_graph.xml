@@ -53,12 +53,30 @@
         android:id="@+id/fragmentUserIndex"
         android:name="communere.ui.userIndex.UserIndexFragment"
         android:label="@string/fragment_userIndex"
-        tools:layout="@layout/fragment_user_index" />
+        tools:layout="@layout/fragment_user_index">
+
+        <action
+            android:id="@+id/action_fragmentUserIndex_to_fragmentUserUpdate"
+            app:destination="@id/fragmentUserUpdate">
+
+            <argument
+                android:name="model"
+                app:argType="string"
+                app:nullable="true" />
+
+        </action>
+
+    </fragment>
 
     <fragment
         android:id="@+id/fragmentUserUpdate"
         android:name="communere.ui.userUpdate.UserUpdateFragment"
         android:label="@string/fragment_userUpdate"
-        tools:layout="@layout/fragment_user_update" />
+        tools:layout="@layout/fragment_user_update">
+        <argument
+            android:name="model"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
 
 </navigation>

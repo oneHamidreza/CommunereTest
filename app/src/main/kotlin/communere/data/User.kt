@@ -35,7 +35,13 @@ data class User(
         fun getAllUsers(): List<User> {
             val list = arrayListOf<User>()
             (1..30).forEach {
-                list.add(User(alias = "User #$it"))
+                list.add(
+                    User(
+                        alias = "User #$it",
+                        username = "some_username_$it",
+                        email = "someEmail$it@communere.com",
+                    )
+                )
             }
             return list
         }

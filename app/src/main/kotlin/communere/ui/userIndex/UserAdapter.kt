@@ -37,9 +37,10 @@ typealias Model = User
 typealias ViewHolder = MeowViewHolder<Model>
 typealias DiffCallback = User.DiffCallback
 
-class UserAdapter(var viewModel: UserIndexViewModel) : MeowAdapter<Model, ViewHolder>(
-    DiffCallback()
-) {
+class UserAdapter(var viewModel: UserIndexViewModel, var onClickedItem: (model: Model) -> Unit) :
+    MeowAdapter<Model, ViewHolder>(
+        DiffCallback()
+    ) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemUserBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -48,6 +49,10 @@ class UserAdapter(var viewModel: UserIndexViewModel) : MeowAdapter<Model, ViewHo
                 it.ivRemove.setOnClickListener {
                     viewModel.removeItem(model)
                 }
+                binding.root.setOnClickListener {
+                    onClickedItem(model)
+                }
+
                 it.setVariable(BR.model, model)
                 it.executePendingBindings()
             }
