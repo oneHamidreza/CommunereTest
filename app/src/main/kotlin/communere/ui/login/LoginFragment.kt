@@ -7,7 +7,6 @@ import communere.R
 import communere.data.ApiEvent
 import communere.data.Authenticate
 import communere.data.User
-import communere.data.UserTypes
 import communere.databinding.FragmentLoginBinding
 import communere.ui.base.BaseFragment
 import meow.ktx.instanceViewModel
@@ -65,10 +64,10 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
                 is ApiEvent.Success -> {
                     toastL(R.string.warn_login_success)
                     val user = it.data as User
-                    if (user.userType == UserTypes.ADMIN) {
+                    if (user.isAdmin) {
                         findNavController().navigate(LoginFragmentDirections.actionFragmentLoginToFragmentUserIndex())
                     } else {
-                        findNavController().navigate(LoginFragmentDirections.actionFragmentLoginToFragmentHome())
+                        findNavController().navigate(LoginFragmentDirections.actionFragmentHomeToFragmentUserUpdate())
                     }
                 }
                 is ApiEvent.Error -> {

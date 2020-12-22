@@ -7,12 +7,16 @@
 
     <action
         android:id="@+id/action_fragmentHome_to_fragmentUserIndex"
+        app:destination="@id/fragmentUserUpdate" />
+
+    <action
+        android:id="@+id/action_fragmentHome_to_fragmentUserUpdate"
         app:destination="@id/fragmentUserIndex" />
 
     <fragment
         android:id="@+id/fragmentHome"
         android:name="communere.ui.home.HomeFragment"
-        tools:layout="@layout/fragment_home"></fragment>
+        tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/fragmentLogin"
@@ -45,10 +49,16 @@
             app:popUpToInclusive="true" />
     </fragment>
 
-
     <fragment
         android:id="@+id/fragmentUserIndex"
         android:name="communere.ui.userIndex.UserIndexFragment"
+        android:label="@string/fragment_userIndex"
         tools:layout="@layout/fragment_user_index" />
+
+    <fragment
+        android:id="@+id/fragmentUserUpdate"
+        android:name="communere.ui.userUpdate.UserUpdateFragment"
+        android:label="@string/fragment_userUpdate"
+        tools:layout="@layout/fragment_user_update" />
 
 </navigation>

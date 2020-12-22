@@ -3,7 +3,7 @@
     <string name="register_fullname">Full Name</string>
     <string name="register_username">Email/Username</string>
     <string name="register_password">Password</string>
-    <string name="register_password_confirm">Password</string>
+    <string name="register_password_confirm">Confirm Password</string>
     <string name="register_action">Signup</string>
     <string name="dialog_register">Signing up …</string>
     <string name="warn_register_success">You\'ve logged into account!</string>

@@ -17,11 +17,6 @@
 
     <color name="ic_launcher_background">#011A1E</color>
 
-    <color name="bucket_inbox">#595959</color>
-    <color name="bucket_today">#ffad5b</color>
-    <color name="bucket_planned">#5e5ce5</color>
-    <color name="bucket_someday">#a27e4e</color>
-    <color name="bucket_next">#36b26a</color>
-    <color name="projects">#7b66c6</color>
-    <color name="history">#394d82</color>
+    <color name="remove">#bf3200</color>
+
 </resources>

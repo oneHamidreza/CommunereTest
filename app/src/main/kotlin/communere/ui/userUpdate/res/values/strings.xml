@@ -1,0 +1,13 @@
+<resources>
+    <string name="fragment_userUpdate">User Update</string>
+    <string name="userUpdate_username">Username</string>
+    <string name="userUpdate_email">Email</string>
+    <string name="userUpdate_action">Update User</string>
+    <string name="userUpdate_actionDelete">Delete User</string>
+    <string name="dialog_userUpdate">Signing up …</string>
+    <string name="warn_userUpdate_success">User updated.</string>
+    <string name="warn_userUpdate_delete_success">User deleted.</string>
+    <string name="warn_userUpdate_invalid">Check inputs!</string>
+    <string name="warn_userUpdate_failed">Can\'t update user</string>
+    <string name="warn_userUpdate_delete_failed">Can\'t delete user</string>
+</resources>

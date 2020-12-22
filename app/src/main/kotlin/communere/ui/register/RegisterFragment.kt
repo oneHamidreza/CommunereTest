@@ -60,7 +60,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
                 }
                 is ApiEvent.Success -> {
                     toastL(R.string.warn_register_success)
-                    findNavController().navigate(RegisterFragmentDirections.actionFragmentRegisterToFragmentHome())
+                    findNavController().navigate(RegisterFragmentDirections.actionFragmentHomeToFragmentUserUpdate())
                 }
                 is ApiEvent.Error -> {
                     val data = it.data as? Authenticate.Api.ResponseLogin

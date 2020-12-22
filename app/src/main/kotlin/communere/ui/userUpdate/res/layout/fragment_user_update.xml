@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="communere.ui.userUpdate.UserUpdateViewModel" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    meow_gap="@{16}"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="24dp">
+
+                    <meow.widget.MeowTextField
+                        android:id="@+id/etEmail"
+                        style="@style/App.TextField.Login"
+                        android:hint="@string/userUpdate_email"
+                        android:textDirection="ltr"
+                        app:errorEnabled="true"
+                        app:meow_inputType="textEmailAddress"
+                        app:startIconDrawable="@drawable/ic_email" />
+
+                    <meow.widget.MeowTextField
+                        android:id="@+id/etUsername"
+                        style="@style/App.TextField.Login"
+                        android:hint="@string/userUpdate_username"
+                        android:textDirection="ltr"
+                        app:errorEnabled="true"
+                        app:meow_inputType="text"
+                        app:startIconDrawable="@drawable/ic_person" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="16dp"
+                        android:gravity="end">
+
+                        <Button
+                            android:id="@+id/btAction"
+                            style="@style/Meow.Button"
+                            android:layout_marginEnd="16dp"
+                            android:text="@string/userUpdate_action" />
+
+                        <Button
+                            android:id="@+id/btActionDelete"
+                            style="@style/Meow.Button"
+                            android:layout_marginEnd="16dp"
+                            app:backgroundTint="@color/remove"
+                            android:text="@string/userUpdate_actionDelete" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+        <meow.widget.MeowProgressBar
+            android:id="@+id/pb"
+            style="@style/Meow.ProgressBar" />
+
+    </FrameLayout>
+
+</layout>

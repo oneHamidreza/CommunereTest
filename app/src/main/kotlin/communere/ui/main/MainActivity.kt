@@ -55,6 +55,9 @@ class MainActivity : MeowActivity<ActivityMainBinding>() {
         if (user.userType == UserTypes.ADMIN) {
             navController.popBackStack()
             navController.navigate(R.id.fragmentUserIndex)
+        } else {
+            navController.popBackStack()
+            navController.navigate(R.id.fragmentUserUpdate)
         }
     }
 

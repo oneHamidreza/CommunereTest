@@ -16,6 +16,7 @@ import com.squareup.moshi.JsonClass
 data class User(
     @Json(name = "alias") var alias: String? = null,
     @Json(name = "username") var username: String? = null,
+    @Json(name = "email") var email: String? = null,
     @Json(name = "password") var password: String? = null,
     @Json(name = "userId") var userId: String? = null,
     @Json(name = "avatarUrl") var avatarUrl: String? = null,
@@ -25,6 +26,9 @@ data class User(
         get() {
             return UserTypes.values().find { it.ordinal == userTypeValue } ?: UserTypes.USER
         }
+
+    val isAdmin: Boolean
+        get() = userType == UserTypes.ADMIN
 
     class Repository {
 

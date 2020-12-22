@@ -34,6 +34,7 @@ class Authenticate {
                         "status": true,
                         "fullname": "Admin",
                         "username": "admin",
+                        "email":"admin@communere.com",
                         "user_type": 0,
                         "token": "SOME_TOKEN_VALUE"
                     }
@@ -45,6 +46,7 @@ class Authenticate {
                         "status" : true,
                         "fullname" : "Hamidreza Etebarian",
                         "username" : "$username",
+                        "email":"$username@communere.com",
                         "user_type" : 1,
                         "token" : "SOME_TOKEN_VALUE"
                     }
@@ -91,6 +93,7 @@ class Authenticate {
             @Json(name = "message") var message: String? = null,
             @Json(name = "fullname") var fullname: String? = null,
             @Json(name = "username") var username: String? = null,
+            @Json(name = "email") var email: String? = null,
             @Json(name = "user_type") var userTypeValue: Int = UserTypes.USER.ordinal,
             @Json(name = "token") var token: String? = null
         ) {
@@ -98,6 +101,7 @@ class Authenticate {
                 get() = User(
                     alias = fullname ?: "",
                     username = username,
+                    email = email,
                     userTypeValue = userTypeValue
                 ).apply {
                     logD(m = "userType value : $userTypeValue")
@@ -115,6 +119,7 @@ class Authenticate {
         class RequestRegister(
             @Json(name = "fullname") var fullname: String? = null,
             @Json(name = "username") var username: String? = null,
+            @Json(name = "email") var email: String? = null,
             @Json(name = "password") var password: String? = null,
             @Json(name = "password_confirm") var passwordConfirm: String? = null
         ) {
@@ -131,6 +136,7 @@ class Authenticate {
             @Json(name = "message") var message: String? = null,
             @Json(name = "fullname") var fullname: String? = null,
             @Json(name = "username") var username: String? = null,
+            @Json(name = "email") var email: String? = null,
             @Json(name = "user_type") var userTypeValue: Int = UserTypes.USER.ordinal,
             @Json(name = "token") var token: String? = null
         ) {
@@ -138,6 +144,7 @@ class Authenticate {
                 get() = User(
                     alias = fullname ?: "",
                     username = username,
+                    email = email,
                     userTypeValue = userTypeValue,
                 )
         }
