@@ -34,7 +34,7 @@ class Authenticate {
                         "status": true,
                         "fullname": "Admin",
                         "username": "admin",
-                        "user_type": 1,
+                        "user_type": 0,
                         "token": "SOME_TOKEN_VALUE"
                     }
                 """.trimIndent().fromJson<Api.ResponseLogin>()!!
@@ -45,7 +45,7 @@ class Authenticate {
                         "status" : true,
                         "fullname" : "Hamidreza Etebarian",
                         "username" : "$username",
-                        "user_type" : 0,
+                        "user_type" : 1,
                         "token" : "SOME_TOKEN_VALUE"
                     }
                 """.trimIndent().fromJson<Api.ResponseLogin>()!!
@@ -66,7 +66,7 @@ class Authenticate {
                         "status": true,
                         "fullname": "${request.fullname}",
                         "username": "${request.username}",
-                        "user_type": 0,
+                        "user_type": 1,
                         "token": "SOME_TOKEN_VALUE"
                     }
                 """.trimIndent().fromJson<Api.ResponseRegister>()!!
@@ -99,7 +99,9 @@ class Authenticate {
                     alias = fullname ?: "",
                     username = username,
                     userTypeValue = userTypeValue
-                )
+                ).apply {
+                    logD(m = "userType value : $userTypeValue")
+                }
 
             fun decodeJWT(): User {
                 val jwt = JWT(token ?: "")

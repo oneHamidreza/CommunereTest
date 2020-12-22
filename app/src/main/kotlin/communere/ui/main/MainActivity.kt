@@ -4,20 +4,19 @@ import android.view.View
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 import communere.R
 import communere.data.DataSource
+import communere.data.UserTypes
 import communere.databinding.ActivityMainBinding
 import communere.ui.home.HomeViewModel
 import communere.widget.navheader.NavHeaderView
 import meow.core.ui.MeowActivity
-import meow.ktx.alert
-import meow.ktx.getColorCompat
-import meow.ktx.instanceViewModel
-import meow.ktx.sdkNeed
+import meow.ktx.*
 import org.kodein.di.erased.instance
 
 /**
@@ -49,14 +48,25 @@ class MainActivity : MeowActivity<ActivityMainBinding>() {
         if (!dataSource.isLogin()) {
             navController.popBackStack()
             navController.navigate(R.id.fragmentLogin)
+            return
+        }
+
+        val user = dataSource.fetchUser()
+        if (user.userType == UserTypes.ADMIN) {
+            navController.popBackStack()
+            navController.navigate(R.id.fragmentUserIndex)
         }
     }
 
     private fun setupNavigation() {
-        navController = findNavController(R.id.navHost).apply {
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.navHost) as NavHostFragment
+
+        navController = navHostFragment.navController.apply {
             addOnDestinationChangedListener { _, destination, _ ->
                 when (destination.id) {
                     R.id.fragmentLogin -> {
+                        logD(m = "changed Nav : Login")
                         binding.toolbar.visibility = View.GONE
                         binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
                     }
@@ -72,6 +82,8 @@ class MainActivity : MeowActivity<ActivityMainBinding>() {
         setupActionBarWithNavController(navController, appBarConfiguration)
 
         binding.apply {
+            toolbar.setupWithNavController(navController, appBarConfiguration)
+            navigationView.setupWithNavController(navController)
             drawerLayout.setStatusBarBackgroundColor(getColorCompat(R.color.status_bar))
             navHeaderView = NavHeaderView(context())
             navigationView.addHeaderView(navHeaderView!!)
@@ -85,12 +97,12 @@ class MainActivity : MeowActivity<ActivityMainBinding>() {
                 when (item.itemId) {
                     R.id.actionToHome -> navController.navigate(R.id.fragmentHome)
                     R.id.actionToLogout -> {
-                        alert(R.string.logout_alert_title,R.string.logout_alert_message)
-                            .setPositiveButton(R.string.yes){ _,_ ->
+                        alert(R.string.logout_alert_title, R.string.logout_alert_message)
+                            .setPositiveButton(R.string.yes) { _, _ ->
                                 viewModel?.logout()
                                 recreate()
                             }
-                            .setNegativeButton(R.string.no){_,_ ->
+                            .setNegativeButton(R.string.no) { _, _ ->
 
                             }
                             .show()

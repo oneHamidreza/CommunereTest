@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="fragment_userIndex">Users</string>
+    <string name="warn_userIndex_remove">User has been removed.</string>
+
+</resources>

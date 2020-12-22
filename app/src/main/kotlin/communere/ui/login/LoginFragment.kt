@@ -6,6 +6,8 @@ import androidx.navigation.fragment.findNavController
 import communere.R
 import communere.data.ApiEvent
 import communere.data.Authenticate
+import communere.data.User
+import communere.data.UserTypes
 import communere.databinding.FragmentLoginBinding
 import communere.ui.base.BaseFragment
 import meow.ktx.instanceViewModel
@@ -62,7 +64,12 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
                 }
                 is ApiEvent.Success -> {
                     toastL(R.string.warn_login_success)
-                    findNavController().navigate(LoginFragmentDirections.actionFragmentLoginToFragmentHome())
+                    val user = it.data as User
+                    if (user.userType == UserTypes.ADMIN) {
+                        findNavController().navigate(LoginFragmentDirections.actionFragmentLoginToFragmentUserIndex())
+                    } else {
+                        findNavController().navigate(LoginFragmentDirections.actionFragmentLoginToFragmentHome())
+                    }
                 }
                 is ApiEvent.Error -> {
                     val data = it.data as? Authenticate.Api.ResponseLogin
